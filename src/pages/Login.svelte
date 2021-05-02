@@ -1,17 +1,6 @@
 <script>
       import {  TextField, MaterialApp, Button } from 'svelte-materialify';
-      const emailRules = [
-        (v) => !!v || 'Required',
-        (v) => {
-        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(v) || 'Invalid e-mail.';
-    },
-  ];
-
-  const passwordRules = [
-      (v) => !!v || 'Required',
-      (v) => v.length > 8 || 'Password is 8 characters or more.'
-  ]
+        import { emailRules, passwordRules } from '../helpers';
   const login = () => {
 
     const email = document.querySelector("#email").value;

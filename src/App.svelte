@@ -3,6 +3,8 @@
 	import {Route, Router} from "svelte-routing";
 	import Login from "./pages/Login.svelte"; // home
 	import Dashboard from "./pages/Dashboard.svelte"; // home
+import PeopleForm from './pages/PeopleForm.svelte';
+import ProjectForm from './pages/ProjectForm.svelte';
 	export let url ="";
 </script>
 
@@ -11,7 +13,9 @@
 <main>
 	<Router url="{url}">
     	<Route path="/" component="{Login}" /> 
-    	<Route path="/dashboard" component="{Dashboard}" /> 
+    	<Route path="/dashboard"><Dashboard/></Route>
+    	<Route path="/peoples"><PeopleForm/></Route>
+    	<Route path="/projects"><ProjectForm/></Route> 
 
 	</Router>
 </main>
