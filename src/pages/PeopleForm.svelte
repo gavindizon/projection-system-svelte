@@ -1,18 +1,21 @@
 <script>
     import { MaterialApp, TextField, Row, Col } from "svelte-materialify";
-    import { emailRules, passwordRules } from '../helpers';
+    import { emailRules, passwordRules, authenticate } from '../helpers';
     import axios from "axios";
     let firstname="";
     let lastname="";
     let email="";
     let password ="";
-
+    const promise = authenticate();
     const addPerson = async () => {
         console.log("Add Person");
         try{
 
             if(!lastname || !firstname || !email || !password)
                 throw "Please input all data required";
+
+            if(/^S*$/.test(password))
+                throw "Password must not contain a space";
 
             const res = await axios({
                 method: "POST",
@@ -57,9 +60,9 @@
 
 </script>
 
-
+{#await promise then data}
 <div style="margin: 0 3.2rem">
-    <h3 style="text-align:left;">Welcome, Gavin!</h3>
+    <h3 style="text-align:left;">Welcome, {data.first_name}!</h3>
     <div style="margin-top:3.6rem" class="form-container">
         <h3 style="padding-bottom: 3.2rem">Add People</h3>
         <MaterialApp>
@@ -76,7 +79,7 @@
                     <TextField placeholder="Email" color="#ff3e00" rules={emailRules} style={"margin-bottom: 2.4rem"} name="email" id="email" bind:value={email}/>
                 </Col>                
                 <Col>            
-                    <TextField placeholder="Password" color="#ff3e00" rules={passwordRules}  style={"margin-bottom: 2.4rem"} type="password" name="password" id="password" bind:value={password}/>
+                    <TextField placeholder="Password" color="#ff3e00" rules={passwordRules} style={"margin-bottom: 2.4rem"} type="password" name="password" id="password" bind:value={password}/>
                 </Col>                
             </Row>
             <button class="btn" on:click={addPerson}>ADD PERSON</button>
@@ -85,19 +88,10 @@
 
     </div>
 </div>
-
+{/await}
 
 <style>
-    .form-container{
-    background-color: #FFF;
-    -webkit-box-shadow: 10px 10px 19px 2px rgba(0, 0, 0, 0.13);
-    -moz-box-shadow: 10px 10px 19px 2px rgba(0, 0, 0, 0.13);
-    box-shadow: 10px 10px 19px 2px rgba(0, 0, 0, 0.13);
-    border-radius: 6px;
-    margin: 3.6rem auto;
-    width: 720px;
-    padding: 3.2rem 3.2rem 3.6rem;
-}
+
 .btn{
         background-color: #ff3e00;
         color: #FFF;

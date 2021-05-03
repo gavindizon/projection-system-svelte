@@ -1,20 +1,41 @@
 <script>
   import { link } from "svelte-routing";
+  import { authenticate } from "../helpers";
+import axios from "axios";
+
+  const logout = async () => {
+    try{
+            const res = await axios({
+                method: "POST",
+                withCredentials: true,
+                url: "https://localhost:44377/api/auth/logout",
+            });
+
+            if(res.status === 200){
+                alert("Successful Logout");
+                window.location.assign("/");
+            }
+
+        }catch(err){
+            alert(err);
+        }
+
+  }
 </script>
 
     <nav>
-        <h1>The Projector</h1>
+        <h1><a href="/dashboard" use:link>The Projector</a></h1>
         <div>
             <ul>
-                <li><a href="/projects" use:link>Add Project</a></li>
-                <li><a href="/peoples" use:link>Add Person</a></li>
-                <li><a href="/signout" class="btn btn--primary" style="color: #ff3e00" use:link>Log Out</a></li>
-            </ul>
+                {#if window.location.href !== "http://localhost:5000/"}
+                    <li><a href="/projects" use:link>Add Project</a></li>
+                    <li><a href="/peoples" use:link>Add Person</a></li>
+                    <li><a href="/" class="btn btn--primary" style="color: #ff3e00" on:click={logout}>Log Out</a></li>
+                    
+                {/if}
+            </ul>                
+            
         </div>
-        <!-- <div>
-            <a href='/' class="btn" use:link>SIGN UP</a>
-            <a href="login" class="btn btn--primary" use:link>LOGIN</a>
-        </div> -->
     </nav>
 
 <style>
@@ -42,13 +63,13 @@
         text-transform: uppercase;
     }
 
-    ul li a{
+    ul li a, a{
         color: #Fff;
         opacity: 0.8;
         transition: all .4s;
     }
 
-    ul li a:hover{
+    ul li a:hover, a{
         opacity: 1;
     }
 

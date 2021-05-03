@@ -18,6 +18,8 @@ namespace WebAPI.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // add decimal precision 5
+
             modelBuilder.Entity<ProjectAssignment>().HasKey(l => new { l.person_id, l.project_id });
         }
     }

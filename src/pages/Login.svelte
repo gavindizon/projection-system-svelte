@@ -1,22 +1,43 @@
 <script>
       import {  TextField, MaterialApp, Button } from 'svelte-materialify';
-        import { emailRules, passwordRules } from '../helpers';
-  const login = () => {
+    import { emailRules, passwordRules, authenticate } from '../helpers';
+   import axios from "axios";
+    let email = "";
+    let password = "";
+    export let isAuth;
+    authenticate();
 
-    const email = document.querySelector("#email").value;
-    const password = document.querySelector("#password").value;
+    const login = async () => {
+        try{
+            const res = await axios({
+                method: "POST",
+                withCredentials: true,
+                url: "https://localhost:44377/api/auth/login",
+                data: {
+                    username:email,
+                    password
+                }
+            });
 
-    window.location.href = "/dashboard";
+            if(res.status === 200){
+                alert("Welcome back!");
+                isAuth = true;
+                window.location.assign("/dashboard");
+            }
 
+            console.log(res);
+
+        }catch(err){
+            alert(err);
+        }
   }
-
 
 </script>
 <div class="form-login">
     <h2>Projector</h2>
         <MaterialApp>
-            <TextField placeholder="Email" color="#ff3e00" rules={emailRules} style={"margin-bottom: 2.4rem"} name="email" id="email"/>
-            <TextField placeholder="Password" color="#ff3e00" rules={passwordRules}  style={"margin-bottom: 2.4rem"} type="password" name="password" id="password"/>
+            <TextField placeholder="Email" color="#ff3e00" rules={emailRules} style={"margin-bottom: 2.4rem"} name="email" id="email"bind:value = {email}/>
+            <TextField placeholder="Password" color="#ff3e00" rules={passwordRules}  style={"margin-bottom: 2.4rem"} type="password" name="password" id="password" bind:value = {password}/>
             <button class="btn" on:click={login}>LOGIN</button>
         </MaterialApp>
 </div>

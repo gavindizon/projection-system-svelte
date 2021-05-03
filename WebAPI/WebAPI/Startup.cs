@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebAPI.Helpers;
 using WebAPI.Models;
 
 namespace WebAPI
@@ -34,6 +35,9 @@ namespace WebAPI
             services.AddDbContext<ProjectorDBContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
 
+
+            services.AddScoped<JwtService>();
+
             services.AddCors();
         }
 
@@ -42,7 +46,7 @@ namespace WebAPI
         {
 
             app.UseCors(options =>
-            options.WithOrigins("http://localhost:5000").AllowAnyHeader().AllowAnyMethod());
+            options.WithOrigins("http://localhost:5000").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
 
             if (env.IsDevelopment())

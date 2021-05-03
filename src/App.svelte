@@ -3,22 +3,23 @@
 	import {Route, Router} from "svelte-routing";
 	import Login from "./pages/Login.svelte"; // home
 	import Dashboard from "./pages/Dashboard.svelte"; // home
-import PeopleForm from './pages/PeopleForm.svelte';
-import ProjectForm from './pages/ProjectForm.svelte';
+	import PeopleForm from './pages/PeopleForm.svelte';
+	import ProjectForm from './pages/ProjectForm.svelte';
 	export let url ="";
+
 </script>
 
-<Navbar/>
-<br/>
-<main>
-	<Router url="{url}">
-    	<Route path="/" component="{Login}" /> 
-    	<Route path="/dashboard"><Dashboard/></Route>
-    	<Route path="/peoples"><PeopleForm/></Route>
-    	<Route path="/projects"><ProjectForm/></Route> 
 
-	</Router>
-</main>
+<Navbar/>
+<br />
+	<main>
+		<Router url="{url}">
+			<Route path="/" component="{Login}"/> 
+			<Route path="/dashboard"><Dashboard/></Route>
+			<Route path="/peoples"><PeopleForm/></Route>
+			<Route path="/projects"><ProjectForm/></Route> 
+		</Router>
+	</main>
 
 <style>
 	main {

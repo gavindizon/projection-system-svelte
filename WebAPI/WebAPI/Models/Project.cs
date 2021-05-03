@@ -11,13 +11,14 @@ namespace WebAPI.Models
     {
         [Key]
         public int id { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
+        [StringLength(50)]
+        [Required]
         public string code { get; set; }
         [Column(TypeName = "nvarchar(50)")]
         public string name { get; set; }
         [Column(TypeName = "nvarchar(MAX)")]
         public string remarks { get; set; }
         [Column(TypeName = "decimal(18,4)")]
-        public int budget { get; set; }
+        public decimal budget { get; set; }
     }
 }

@@ -1,34 +1,39 @@
 <script>
-    import {link } from "svelte-routing";
+import {link } from "svelte-routing";
+import { authenticate } from "../helpers";
+   const promise = authenticate();
+
 //    window.location ="/";
 </script>
 
-<div style="margin: 0 3.2rem">
-    <h3 style="text-align:left; ">Welcome, Gavin!</h3>
-    <br/>
-    <table cellpadding="0" cellspacing="0">
-        <tr>
-            <th>Project Name</th>
-            <th>Budget</th>
-            <th>Tasks</th>
-        </tr>       
-        <tr>
-            <td>Project Name</td>
-            <td>$500m</td>
-            <td><a href="projects/assignments/0" use:link>Tasks</a></td>
-        </tr>        
-        <tr>
-            <td>Project Name</td>
-            <td>$500m</td>
-            <td><a href="projects/assignments/0" use:link>Tasks</a></td>
-        </tr>        
-        <tr>
-            <td>Project Name</td>
-            <td>$500m</td>
-            <td><a href="projects/assignments/0" use:link>Tasks</a></td>
-        </tr>
-    </table>
-</div>
+{#await promise then data}
+    <div style="margin: 0 3.2rem">
+        <h3 style="text-align:left; ">Welcome, {data.first_name}!</h3>
+        <br/>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th>Project Name</th>
+                <th>Budget</th>
+                <th>Tasks</th>
+            </tr>       
+            <tr>
+                <td>Project Name</td>
+                <td>$500m</td>
+                <td><a href="projects/assignments/0" use:link>Tasks</a></td>
+            </tr>        
+            <tr>
+                <td>Project Name</td>
+                <td>$500m</td>
+                <td><a href="projects/assignments/0" use:link>Tasks</a></td>
+            </tr>        
+            <tr>
+                <td>Project Name</td>
+                <td>$500m</td>
+                <td><a href="projects/assignments/0" use:link>Tasks</a></td>
+            </tr>
+        </table>
+    </div>    
+{/await}
 
 <style>
     table {border: none;}
